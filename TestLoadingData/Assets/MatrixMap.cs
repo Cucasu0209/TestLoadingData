@@ -396,6 +396,10 @@ public class MatrixMap : MonoBehaviour
         return new Vector2Int(Mathf.CeilToInt((pos.x - Getdownleft().x) / AreaSize) - 1,
            Mathf.CeilToInt((pos.z - Getdownleft().z) / AreaSize) - 1);
     }
+    public Vector3 GetRealWorldPosByIndex(Vector2Int index)
+    {
+        return new Vector3(Getdownleft().x + AreaSize * (index.x + 0.5f), 0, Getdownleft().z + AreaSize * (index.y + 0.5f));
+    }
     //    public void DisplayCell(Vector2Int index)
     //    {
     //#if UNITY_EDITOR

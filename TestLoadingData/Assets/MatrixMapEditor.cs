@@ -119,53 +119,40 @@ public class MatrixMapEditor : Editor
 
         Event e = Event.current;
 
-        Vector2 mousePosition1 = e.mousePosition;
-        Ray worldRay1 = HandleUtility.GUIPointToWorldRay(mousePosition1);
+        Vector2 mousePosition = e.mousePosition;
+        Ray worldRay = HandleUtility.GUIPointToWorldRay(mousePosition);
 
-        if (Physics.Raycast(worldRay1, out RaycastHit hitInfo1))
+        if (Physics.Raycast(worldRay, out RaycastHit hitInfo))
         {
-            Vector3 worldPosition = hitInfo1.point;
+            Vector3 worldPosition = hitInfo.point;
             worldPosition.y = 0;
             Vector2Int mouseIndex = example.GetCellIndexByPos(worldPosition);
             Handles.color = Color.blue;
+            Vector3 mousPos = example.GetRealWorldPosByIndex(mouseIndex);
 
-            Handles.DrawLine(Vector3.up * high + worldPosition + new Vector3(1, 0, 1) * example.AreaSize * (example.BrushSize - 1), Vector3.up * high + worldPosition + new Vector3(1, 0, -1) * example.AreaSize * (example.BrushSize - 1));
-            Handles.DrawLine(Vector3.up * high + worldPosition + new Vector3(1, 0, 1) * example.AreaSize * (example.BrushSize - 1), Vector3.up * high + worldPosition + new Vector3(-1, 0, 1) * example.AreaSize * (example.BrushSize - 1));
-            Handles.DrawLine(Vector3.up * high + worldPosition + new Vector3(-1, 0, -1) * example.AreaSize * (example.BrushSize - 1), Vector3.up * high + worldPosition + new Vector3(1, 0, -1) * example.AreaSize * (example.BrushSize - 1));
-            Handles.DrawLine(Vector3.up * high + worldPosition + new Vector3(-1, 0, -1) * example.AreaSize * (example.BrushSize - 1), Vector3.up * high + worldPosition + new Vector3(-1, 0, 1) * example.AreaSize * (example.BrushSize - 1));
-
-        }
-
+            Handles.DrawLine(Vector3.up * high / 2 + mousPos + new Vector3(1, 0, 1) * example.AreaSize * (example.BrushSize - 0.5f), Vector3.up * high / 2 + mousPos + new Vector3(1, 0, -1) * example.AreaSize * (example.BrushSize - 0.5f));
+            Handles.DrawLine(Vector3.up * high / 2 + mousPos + new Vector3(1, 0, 1) * example.AreaSize * (example.BrushSize - 0.5f), Vector3.up * high / 2 + mousPos + new Vector3(-1, 0, 1) * example.AreaSize * (example.BrushSize - 0.5f));
+            Handles.DrawLine(Vector3.up * high / 2 + mousPos + new Vector3(-1, 0, -1) * example.AreaSize * (example.BrushSize - 0.5f), Vector3.up * high / 2 + mousPos + new Vector3(1, 0, -1) * example.AreaSize * (example.BrushSize - 0.5f));
+            Handles.DrawLine(Vector3.up * high / 2 + mousPos + new Vector3(-1, 0, -1) * example.AreaSize * (example.BrushSize - 0.5f), Vector3.up * high / 2 + mousPos + new Vector3(-1, 0, 1) * example.AreaSize * (example.BrushSize - 0.5f));
 
 
-        // Kiểm tra nếu sự kiện hiện tại là phím được nhấn xuống
-        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.A)
-        {
-            Vector2 mousePosition = e.mousePosition;
-            Ray worldRay = HandleUtility.GUIPointToWorldRay(mousePosition);
 
-            if (Physics.Raycast(worldRay, out RaycastHit hitInfo))
+            // Kiểm tra nếu sự kiện hiện tại là phím được nhấn xuống
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.A)
             {
-                Vector3 worldPosition = hitInfo.point;
-                Vector2Int mouseIndex = example.GetCellIndexByPos(worldPosition);
+                Debug.Log(mouseIndex);
                 for (int g = -example.BrushSize + 1; g < example.BrushSize; g++)
                 {
                     for (int h = -example.BrushSize + 1; h < example.BrushSize; h++)
                     {
+                        Debug.Log("aaa" + new Vector2Int(mouseIndex.x + g, mouseIndex.y + h));
+
                         example.MarkCell(mouseIndex.x + g, mouseIndex.y + h);
                     }
                 }
             }
-        }
-        if (e.type == EventType.KeyDown && e.keyCode == KeyCode.D)
-        {
-            Vector2 mousePosition = e.mousePosition;
-            Ray worldRay = HandleUtility.GUIPointToWorldRay(mousePosition);
-
-            if (Physics.Raycast(worldRay, out RaycastHit hitInfo))
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.D)
             {
-                Vector3 worldPosition = hitInfo.point;
-                Vector2Int mouseIndex = example.GetCellIndexByPos(worldPosition);
                 for (int g = -example.BrushSize + 1; g < example.BrushSize; g++)
                 {
                     for (int h = -example.BrushSize + 1; h < example.BrushSize; h++)
@@ -176,6 +163,8 @@ public class MatrixMapEditor : Editor
                 }
             }
         }
+
+
 
 
 
