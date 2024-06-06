@@ -242,7 +242,12 @@ public class MatrixMapEditor : Editor
             }
 
         }
-        GUILayout.Label("data: " + example.data);
+        GUILayout.Label("Luư ý: \ncần để 1 cái plane ở dưới mới có thể delete hoặc add" +
+            "\n Giữ A đồng thời trỏ chuột để add" +
+            "\n Giữ D đồng thời trỏ chuổi để delete" +
+            "\n chỉnh độ rộng brush ở trên" +
+            "\n chỉnh Cam Orthographic" +
+            "\n nhớ load trước khi thêm và save khi thêm xong");
     }
 }
 
